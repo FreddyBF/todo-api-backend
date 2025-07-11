@@ -1,6 +1,11 @@
+// src/server.ts
+
 import { env } from './config/env';
 import { app } from './app';
 
-app.listen(Number(env.port), () => {
-  console.log(`Server is running at http://localhost:${env.port}`);
+const PORT = Number(env.port);
+
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
 });
+
