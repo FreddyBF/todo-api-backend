@@ -1,5 +1,12 @@
-import { prisma } from '../config/prisma';
+import { ITarefaRepository } from '@interfaces/ITaskRepository';
 
-export const createTask = async (data: { title: string; description?: string; userId: string }) => {
-  return prisma.task.create({ data });
-};
+export class TaskService {
+  constructor(
+    private readonly taskRespository: ITarefaRepository
+  ) {}
+
+  async createTask(): Promise<void> {
+
+  }
+}
+
