@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 export const StatusEnum = z.enum(['pendente', 'em_andamento', 'concluida', 'cancelada']);
 
-export const UpdateTarefaDto = z
+export const UpdateTarefaSchema = z
   .object({
     titulo: z
       .string({
@@ -40,4 +40,4 @@ export const UpdateTarefaDto = z
     }
   );
 
-export type UpdateTarefaInput = z.infer<typeof UpdateTarefaDto>;
+export type UpdateTarefaDto = z.infer<typeof UpdateTarefaSchema>;
