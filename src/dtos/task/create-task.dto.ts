@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const CreateTarefaDto = z.object({
+export const CreateTarefaSchema = z.object({
   titulo: z
     .string({
       required_error: 'O título é obrigatório',
@@ -22,4 +22,4 @@ export const CreateTarefaDto = z.object({
     .optional()
 });
 
-export type CreateTarefaInput = z.infer<typeof CreateTarefaDto>;
+export type CreateTarefaDto = z.infer<typeof CreateTarefaSchema>;
