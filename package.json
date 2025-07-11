@@ -1,0 +1,48 @@
+{
+  "name": "default_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --watch 'src/**/*.ts' --exec \"ts-node -r tsconfig-paths/register src/server.ts\"",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "generate": "prisma generate",
+    "migrate": "prisma migrate dev --name init",
+    "studio": "npx prisma studio"
+  },
+  "keywords": [
+    "api",
+    "typescript",
+    "express",
+    "prisma"
+  ],
+  "author": "Alfredo Baptsta",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/helmet": "^0.0.48",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.0.10",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.11.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.11.1",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.1.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "zod": "^3.25.75"
+  }
+}
