@@ -1,25 +1,10 @@
 import { z } from 'zod';
 
-export const CreateTarefaSchema = z.object({
-  titulo: z
-    .string({
-      required_error: 'O título é obrigatório',
-      invalid_type_error: 'O título deve ser uma string'
-    })
-    .min(10, 'O título deve ter no mínimo dez caracteres'),
-
-  descricao: z
-    .string({
-      invalid_type_error: 'A descrição deve ser uma string'
-    })
-    .optional(),
-
-  prazoFinal: z
-    .coerce
-    .date({
-      invalid_type_error: 'A data deve estar em formato válido'
-    })
-    .optional()
+export const CreateTaskSchema = z.object({
+  titulo: z.string().min(10, 'O título deve ter no mínimo 10 caracteres'),
+  descricao: z.string(),
+  prazoFinal: z.coerce.date().optional(),
+  status: z.enum(['pendente', 'concluida', 'em_andamento']).optional()
 });
 
-export type CreateTarefaDto = z.infer<typeof CreateTarefaSchema>;
+export type CreateTaskDto = z.infer<typeof CreateTaskSchema>;
