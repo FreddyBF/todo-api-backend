@@ -17,7 +17,9 @@ export class AuthService {
     if (exists) throw new UserAlreadyExistsError();
 
     const hashed = await hashPassword(data.password);
-    const user = await this.userRepository.create({ ...data, password: hashed });
+    const user = await this.userRepository.create({ 
+      ...data, password: hashed 
+    });
     const userdto: UserResponseDto = {
       id: user.id,
       nome: user.nome,
