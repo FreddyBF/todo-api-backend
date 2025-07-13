@@ -5,10 +5,9 @@ import { TaskService } from "@services/task.service";
 import { sendResponse } from "@utils/sendResponse";
 import { Request, Response, NextFunction } from "express";
 
-
 export class TaskController {
   constructor(private readonly service: TaskService) {}
-
+  
   create = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const task: CreateTaskDto = req.body;
