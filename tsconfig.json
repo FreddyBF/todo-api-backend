@@ -20,6 +20,7 @@
       "@interfaces/*": ["interfaces/*"], 
       "@repositories/*": ["repositories/*"],
       "@dtos/*": ["dtos/*"],
+      "@validations/*": ["validations/*"],
       "@errors/*": ["errors/*"],      
     },
                                                   
