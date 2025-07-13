@@ -25,7 +25,7 @@ export class TaskController {
         req.userId!, status as StatusTarefa, new Date(prazo)
       );
       const mensagem = listaTarefas.length === 0
-        ? 'Nenhuma tarefa encontrada para este usuário.'
+        ? 'Nenhuma tarefa encontrada'
         : 'Lista de tarefas obtida com sucesso.';
       return sendResponse(res, 200, mensagem, listaTarefas);
     } catch (error) {
