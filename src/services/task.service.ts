@@ -26,14 +26,6 @@ export class TaskService {
     const tarefa = await this.tarefaRepository.create(userId, dto);
     return this.toResponse(tarefa);
   }
-
-  // 📋 Listar todas as tarefas de um usuário
-  async listTasks(userId: number): Promise<TaskResponseDto[]> {
-    const tarefas = await this.tarefaRepository.findAllByUser(userId);
-    return tarefas.map(this.toResponse);
-  }
-
-
   // 🔎 Buscar tarefa com validação de propriedade
   async getTaskById(userId: number, taskId: number): Promise<TaskResponseDto> {
     const tarefa = await this.tarefaRepository.findById(taskId, userId);
@@ -43,20 +35,22 @@ export class TaskService {
     return this.toResponse(tarefa);
   }
 
-  // 🔍 Filtrar tarefas
-  async filterTasks(
-  userId: number,
-  status?: StatusTarefa,
-  prazo?: Date
+  async getTasks(
+    userId: number,
+    status?: StatusTarefa,
+    prazo?: Date
   ): Promise<TaskResponseDto[]> {
-  const tarefas = await this.tarefaRepository.findFiltered(userId, status, prazo);
-
-  if (!tarefas || tarefas.length === 0) {
-    return []; 
+  
+    let tarefas;
+    if (status || prazo) {
+    // Se houver filtros, aplica o método filtrado
+      tarefas = await this.tarefaRepository.findFiltered(userId, status, prazo);
+    } else {
+      // Se não houver filtros, retorna todas as tarefas do usuário
+      tarefas = await this.tarefaRepository.findAllByUser(userId);
+    }
+    return tarefas.map(this.toResponse);
   }
-  return tarefas.map(this.toResponse);
-}
-
 
   // ✏️ Atualizar dados da tarefa (com validação)
   async updateTask(
