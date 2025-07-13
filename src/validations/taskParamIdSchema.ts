@@ -5,8 +5,8 @@ import { z } from 'zod';
  */
 
 export const taskParamsSchema = z.object({
-  id: z.string().transform((val, context) => {
-    const num = Number(val);
+  id: z.string().transform((valueId, context) => {
+    const num = Number(valueId);
     if (!Number.isInteger(num) || num <= 0) {
       context.addIssue({ 
         code: z.ZodIssueCode.custom,
