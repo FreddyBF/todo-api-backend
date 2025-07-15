@@ -5,7 +5,7 @@ import { UserResponseDto } from '@dtos/auth/user-response.dto';
 import { AuthResponseDto } from '@dtos/auth/auth-response.dto';
 import { hashPassword, comparePassword } from '@utils/hash.utils';
 import { generateToken } from '@utils/jwt.utils';
-import { InvalidCredentialsError } from '@errors/InvalidCredentialsError';
+import { InvalidCredentialsError } from '@errors/invalidCredentials.error';
 import { UserAlreadyExistsError } from '@errors/userAlyreadExist.error';
 
 export class AuthService {
@@ -31,12 +31,12 @@ export class AuthService {
   async login(data: LoginUserDto): Promise<AuthResponseDto> {
     const user = await this.userRepository.findByEmail(data.email);
     if (!user) {
-      throw new InvalidCredentialsError('Usuário não encontrado');
+      throw new InvalidCredentialsError('Usuário não registado');
     }
 
     const passwordIsValid = await comparePassword(data.password, user.password);
       if (!passwordIsValid) {
-        throw new InvalidCredentialsError('Senha inválida');
+        throw new InvalidCredentialsError('Password inválida');
       }
       // Usamos o campo `sub` como identificador principal no JWT
       const token = generateToken({ sub: user.id.toString() });
