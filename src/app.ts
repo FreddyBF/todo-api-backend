@@ -15,11 +15,6 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use('/api', routes);
 
-app.get('/', (req, res) => {
-  // Implementar lógica JWT aqui
-  res.json({ message: 'Rota protegida' });
-});
-
 // Teste de conexão com Prisma
 app.get('/users', async (req, res) => {
  

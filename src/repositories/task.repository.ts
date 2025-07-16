@@ -55,14 +55,6 @@ export class TarefaRepository implements ITarefaRepository {
     });
   }
 
-  // 🔄 Atualizar status
-  async updateStatus(id: number, status: StatusTarefa): Promise<Tarefa> {
-    return this.prisma.tarefa.update({
-      where: { id },
-      data: { status },
-    });
-  }
-
   // 🗑️ Remover tarefa
   async delete(id: number): Promise<Tarefa> {
     return this.prisma.tarefa.delete({

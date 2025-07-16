@@ -1,10 +1,9 @@
-import { InvalidCredentialsError } from '@errors/InvalidCredentialsError';
+import { InvalidCredentialsError } from '@errors/invalidCredentials.error';
 import { UserAlreadyExistsError } from '@errors/userAlyreadExist.error';
 import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
 import { sendResponse } from '@utils/sendResponse'; // substitua pelo caminho correto
-import { env } from '@config/env'; // ou o caminho correto
-
+import { NotFoundError } from '@errors/notFound.error';
 
 export function errorHandler(
   err: any,
@@ -24,6 +23,14 @@ export function errorHandler(
     sendResponse(res, 400, err.message || 'Usuário não registado.', null, false, {
       code: 'AUTH_ERROR',
       details: ['Credenciais inválidas.']
+    });
+    return;
+  }
+
+  if(err instanceof NotFoundError) {
+    sendResponse(res, 404, err.message, null, false, {
+      code: 'NOT_FOUND_ERROR',
+      details: ['Tarefa não encontrada']
     });
     return;
   }

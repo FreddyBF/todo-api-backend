@@ -14,6 +14,7 @@ export const env = {
   port: process.env.PORT ?? '8000',
   jwtSecret: requireEnv('JWT_SECRET'),
   databaseUrl: requireEnv('DATABASE_URL'),
+  jwtExpireIn: requireEnv('JWT_EXPIRES_IN'),
   nodeEnv: process.env.NODE_ENV ?? 'development',
 };
 

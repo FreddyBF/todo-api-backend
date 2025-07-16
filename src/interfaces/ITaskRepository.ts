@@ -16,9 +16,6 @@ export interface ITarefaRepository {
   ): Promise<Tarefa[]>;
 
   update(id: number, data: UpdateTarefaDto): Promise<Tarefa>;
-
-  updateStatus(id: number, status: StatusTarefa): Promise<Tarefa>;
-
   delete(id: number): Promise<Tarefa>;
 }
 

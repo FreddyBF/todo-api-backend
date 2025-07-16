@@ -16,12 +16,10 @@ export function requireAuth(req: Request, res: Response, next: NextFunction): vo
   }
 
   const token = authHeader.split(' ')[1]; // Extrai o valor do token
-
   try {
     const decoded = jwt.verify(token, env.jwtSecret) as AuthPayload;
-
     const userId = Number(decoded.sub);
-
+   
     if (!decoded?.sub || isNaN(userId) || !Number.isInteger(userId)) {
       res.status(401).json({
         message: 'Token inválido: campo `sub` deve ser um número inteiro válido.',

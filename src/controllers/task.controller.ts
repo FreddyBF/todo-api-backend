@@ -21,8 +21,9 @@ export class TaskController {
   getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { status, prazo } = req.query;
+      const dataPrazo = prazo ? new Date(prazo as string) : undefined;
       const listaTarefas = await this.service.getTasks(
-        req.userId!, status as StatusTarefa, new Date(prazo)
+        req.userId!, status as StatusTarefa, dataPrazo
       );
       const mensagem = listaTarefas.length === 0
         ? 'Nenhuma tarefa encontrada'
@@ -48,7 +49,7 @@ export class TaskController {
       const task: UpdateTarefaDto = req.body;
       const taskId = Number(req.params.id);
       const newTask = await this.service.updateTask(req.userId!, taskId, task);
-      return sendResponse(res, 200, 'Tarefa deletada com sucesso', newTask);
+      return sendResponse(res, 200, 'Tarefa actualizada com sucesso', newTask);
     } catch (error) {
       next(error);
     }
@@ -58,7 +59,7 @@ export class TaskController {
     const taskId = Number(req.params.id);
     try {
       const deletedTask = await this.service.deleteTask(req.userId!, taskId);
-      return sendResponse(res, 200, 'Tarefa apagada com sucesso', deletedTask);
+      return sendResponse(res, 200, 'Tarefa deletada com sucesso', deletedTask);
     } catch (error) {
       next(error);
     }

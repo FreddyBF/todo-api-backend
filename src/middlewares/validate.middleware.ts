@@ -10,12 +10,7 @@ export const validate = (
         campo: err.path.join('.'),
         mensagem: err.message
       }));
-
-      res.status(400).json({
-        success: false,
-        errors: errors
-      });
-      return;
+      next(errors)
     }
 
     // Se passou, podemos substituir os dados validados

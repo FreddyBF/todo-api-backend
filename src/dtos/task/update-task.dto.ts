@@ -1,7 +1,5 @@
-// src/dtos/tarefa/update-tarefa.dto.ts
+import { StatusTarefa } from '@prisma/client';
 import { z } from 'zod';
-
-export const StatusEnum = z.enum(['pendente', 'em_andamento', 'concluida', 'cancelada']);
 
 export const UpdateTarefaSchema = z
   .object({
@@ -11,33 +9,36 @@ export const UpdateTarefaSchema = z
       })
       .min(3, 'O título deve ter no mínimo 3 caracteres')
       .optional(),
-
+      
     descricao: z
       .string({
         invalid_type_error: 'A descrição deve ser uma string'
       })
       .optional(),
-
-    prazoFinal: z
-      .coerce
-      .date({
-        invalid_type_error: 'O prazo final deve ser uma data válida'
-      })
-      .nullable()
-      .optional(),
-
-    status: StatusEnum.optional()
+    prazoFinal: z.preprocess((val) => {
+      if (typeof val === 'string') {
+        const date = new Date(val);
+        return isNaN(date.getTime()) ? null : date;
+      }
+      if (val instanceof Date) return val;
+      return null;
+    }, z.date({
+      invalid_type_error: 'Prazo deve estar em formato de data reconhecível',
+    }))
+    .optional()
+    .refine((date) => {
+      if (!date) return true;
+      const now = new Date();
+      now.setHours(0, 0, 0, 0); // Ignora hora para comparação justa
+      return date >= now;
+    }, {
+      message: 'Prazo inválido',
+    }),
+    status: z.nativeEnum(StatusTarefa, {
+    errorMap: () => ({
+      message: 'Status inválido. Valores permitidos "pendente", "em_andamento", "concluida" ou "cancelada".'
+    })
   })
-  .refine(
-    (data) =>
-      data.titulo !== undefined ||
-      data.descricao !== undefined ||
-      data.prazoFinal !== undefined ||
-      data.status !== undefined,
-    {
-      message: 'Pelo menos um campo deve ser informado para atualização',
-      path: [] // aplica erro ao objeto inteiro
-    }
-  );
+});
 
 export type UpdateTarefaDto = z.infer<typeof UpdateTarefaSchema>;

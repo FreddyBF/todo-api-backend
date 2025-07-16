@@ -6,12 +6,9 @@ interface TokenPayload {
   [key: string]: unknown; // Campos adicionais opcionais (ex: role, email)
 }
 
-const JWT_EXPIRATION = '1d';
+const JWT_EXPIRATION = '1h';
 
-export function generateToken(
-  payload: TokenPayload,
-  options?: SignOptions
-): string {
+export function generateToken(payload: TokenPayload, options?: SignOptions ): string {
   return jwt.sign(payload, env.jwtSecret!, {
     expiresIn: JWT_EXPIRATION,
     ...options,

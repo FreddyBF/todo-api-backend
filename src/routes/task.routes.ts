@@ -13,16 +13,17 @@ const taskRepository = new TarefaRepository(prisma);
 const taskController = new TaskController(new TaskService(taskRepository));
 const router = Router();
 
+//Deverá garantir a autenticação de quem estiver acessando estas rotas
 router.use(requireAuth);
 
 router.post(
-    '/tasks', 
+    '/', 
     validate(CreateTaskSchema), 
     taskController.create
 );
 
 router.get(
-    '/tasks/:id', 
+    '/:id', 
     validate(taskParamsSchema, 'params'), 
     taskController.getTask
 );

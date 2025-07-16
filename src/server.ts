@@ -1,6 +1,9 @@
-// src/server.ts
+/**
+ * @author Alfredo Fernando Baptista
+ * Desenolvedor Backend Node.js 
+ */
 
-import { env } from './config/env';
+import { env } from '@config/env';
 import { app } from './app';
 
 const PORT = Number(env.port);

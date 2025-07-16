@@ -28,7 +28,7 @@ export const querySchema = z.object({
       now.setHours(0, 0, 0, 0); // Ignora hora para comparação justa
       return date >= now;
     }, {
-      message: 'Prazo inválido. A data deve ser data actual ou posterior.',
+      message: 'Prazo inválido. A data deve ser a actual ou uma data posterior.',
     }),
 });
 

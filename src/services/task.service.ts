@@ -16,8 +16,8 @@ export class TaskService {
       titulo: tarefa.titulo,
       descricao: tarefa.descricao,
       status: tarefa.status,
-      prazoFinal: tarefa.prazoFinal?.toISOString(),
       criadoEm: tarefa.criadoEm.toISOString(),
+      prazoFinal: tarefa.prazoFinal?.toISOString(),
     };
   }
 
@@ -30,7 +30,7 @@ export class TaskService {
   async getTaskById(userId: number, taskId: number): Promise<TaskResponseDto> {
     const tarefa = await this.tarefaRepository.findById(taskId, userId);
     if (!tarefa) {
-      throw new NotFoundError('TaskResponseDto não encontrada ou não pertence ao usuário');
+      throw new NotFoundError('Tarefa não enontrada');
     }
     return this.toResponse(tarefa);
   }
@@ -60,17 +60,6 @@ export class TaskService {
   ): Promise<TaskResponseDto> {
     const tarefa = await this.getTaskById(userId, taskId);
     const tarefaActualizada = await this.tarefaRepository.update(tarefa.id, dto);
-    return this.toResponse(tarefaActualizada);
-  }
-
-  // 🔄 Atualizar status com verificação
-  async updateStatus(
-    userId: number,
-    taskId: number,
-    status: StatusTarefa
-  ): Promise<TaskResponseDto> {
-    const tarefa = await this.getTaskById(userId, taskId);
-    const tarefaActualizada = await this.tarefaRepository.updateStatus(tarefa.id, status);
     return this.toResponse(tarefaActualizada);
   }
 
